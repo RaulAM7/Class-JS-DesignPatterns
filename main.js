@@ -117,3 +117,38 @@ const observer5 = new Observer(newSubject, 'Agente0005')
 console.log(newSubject.getObservers())
 
 newSubject.notifyObservers()
+
+
+// STRATEGY PATTERN
+
+class Strategy1 {
+    execute(){
+        console.log(`Executing strategy 1`)
+    }
+}
+class Strategy2 {
+    execute() {
+        console.log(`Executing strategy 2`)
+    }
+}
+
+class Context {
+    constructor(name,  strategy){
+        this,name = name
+        this.strategy = strategy
+    }
+    executeStrategy(){
+        this.strategy.execute()
+    }
+    changeStrategy(newStrategy){
+        this.strategy = newStrategy
+    }
+}
+
+const newContext = new Context('Context1', new Strategy1())
+
+newContext.executeStrategy()
+
+newContext.changeStrategy(new Strategy2)
+
+newContext.executeStrategy()
