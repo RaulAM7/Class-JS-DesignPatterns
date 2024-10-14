@@ -69,3 +69,51 @@ class ConfigurationManager {
         this.configData[key] = value
     }
 }
+
+
+// OBSERVER PATTERN
+
+class Subject {
+    constructor(name){
+        this.name = name
+        this.observers = []
+    }
+    addObserver(observer){
+        this.observers.push(observer)
+    }
+    removeObserver(observer){
+        this.observers = this.observers.filter((o) => o !== observer) //Solo incluye los que sean diferentes al que buscamos 
+    }
+    notifyObservers(observer){
+        this.observers.forEach((observer) => observer.updatefromSubject())
+    }
+    getObservers(){
+        return this.observers
+    }
+    getSubjectName(){
+        return this.name
+    }
+}
+
+class Observer {
+    constructor(subject, name){
+        this.name = name
+        this.subject = subject
+        this.subject.addObserver(this)
+    }
+    updatefromSubject(){
+        console.log(`El observer ${this.name} ha sido updateado por el subject ${this.subject.name}`)
+    }
+}
+
+const newSubject = new Subject('Truman')
+
+const observer1 = new Observer(newSubject, 'Agente0001')
+const observer2 = new Observer(newSubject, 'Agente0002')
+const observer3 = new Observer(newSubject, 'Agente0003')
+const observer4 = new Observer(newSubject, 'Agente0004')
+const observer5 = new Observer(newSubject, 'Agente0005')
+
+console.log(newSubject.getObservers())
+
+newSubject.notifyObservers()
